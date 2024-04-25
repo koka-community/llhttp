@@ -39,6 +39,7 @@ ffigen:
     member-rename:
       '.*':
         '_(.*)': '$1'
+    dependency-only: opaque
   enums:
     exclude:
       - (_)+.*
