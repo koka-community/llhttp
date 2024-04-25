@@ -17,7 +17,7 @@ ffigen:
   ffi-native:
     assetId: '../deps/llhttp/build/llhttp.h'
   description: Bindings to `llhttp.h`.
-  output: 'http/generated_bindings.kk'
+  output: 'http/bindings.kk'
   headers:
     entry-points:
       - 'deps/llhttp/build/llhttp.h'
