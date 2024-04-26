@@ -12,127 +12,251 @@ import std/num/int64
 import std/num/float64
 
 extern import
-  c file "../deps/llhttp/build/llhttp.h"
+  ../deps/llhttp/build/llhttp.h
 
-pub extern external/llhttp_init(parser: owned-c<llhttp__internal_s-c>, type1: int32, settings: owned-c<llhttp_settings_s-c>): ()
-  c "llhttp_init"
+pub extern external/llhttp_init(parser: intptr_t, type1: int32, settings: intptr_t): ()
+  c inline "llhttp_init((llhttp_t*)#1, (int32_t)#2, (llhttp_settings_t*)#3)"
 
-pub extern external/llhttp_alloc(type1: int32): owned-c<llhttp__internal_s-c>
-  c "llhttp_alloc"
+pub fun wrapper/llhttp_init(parser: owned-c<llhttp--internal-s-c>, type1: int32, settings: owned-c<llhttp-settings-s-c>): ()
+  with koka-ptr <- parser.with-ptr
+  with koka-ptr1 <- settings.with-ptr
+  external/llhttp_init(koka-ptr, type1, koka-ptr1)
 
-pub extern external/llhttp_free(parser: owned-c<llhttp__internal_s-c>): ()
-  c "llhttp_free"
+pub extern external/llhttp_alloc(type1: int32): intptr_t
+  c inline "llhttp_alloc((int32_t)#1)"
 
-pub extern external/llhttp_get_type(parser: owned-c<llhttp__internal_s-c>): int8
-  c "llhttp_get_type"
+pub fun wrapper/llhttp_alloc(type1: int32): owned-c<llhttp--internal-s-c>
+  external/llhttp_alloc(type1).c-own
 
-pub fun wrapper/llhttp_get_type(parser: owned-c<llhttp__internal_s-c>): int
-  external/llhttp_get_type(parser).int
+pub extern external/llhttp_free(parser: intptr_t): ()
+  c inline "llhttp_free((llhttp_t*)#1)"
 
-pub extern external/llhttp_get_http_major(parser: owned-c<llhttp__internal_s-c>): int8
-  c "llhttp_get_http_major"
+pub fun wrapper/llhttp_free(parser: owned-c<llhttp--internal-s-c>): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_free(koka-ptr)
 
-pub fun wrapper/llhttp_get_http_major(parser: owned-c<llhttp__internal_s-c>): int
-  external/llhttp_get_http_major(parser).int
+pub extern external/llhttp_get_type(parser: intptr_t): int8
+  c inline "llhttp_get_type((llhttp_t*)#1)"
 
-pub extern external/llhttp_get_http_minor(parser: owned-c<llhttp__internal_s-c>): int8
-  c "llhttp_get_http_minor"
+pub fun wrapper/llhttp_get_type(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_type(koka-ptr).int
 
-pub fun wrapper/llhttp_get_http_minor(parser: owned-c<llhttp__internal_s-c>): int
-  external/llhttp_get_http_minor(parser).int
+pub extern external/llhttp_get_http_major(parser: intptr_t): int8
+  c inline "llhttp_get_http_major((llhttp_t*)#1)"
 
-pub extern external/llhttp_get_method(parser: owned-c<llhttp__internal_s-c>): int8
-  c "llhttp_get_method"
+pub fun wrapper/llhttp_get_http_major(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_http_major(koka-ptr).int
 
-pub fun wrapper/llhttp_get_method(parser: owned-c<llhttp__internal_s-c>): int
-  external/llhttp_get_method(parser).int
+pub extern external/llhttp_get_http_minor(parser: intptr_t): int8
+  c inline "llhttp_get_http_minor((llhttp_t*)#1)"
 
-pub extern external/llhttp_get_status_code(parser: owned-c<llhttp__internal_s-c>): int32
-  c "llhttp_get_status_code"
+pub fun wrapper/llhttp_get_http_minor(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_http_minor(koka-ptr).int
 
-pub extern external/llhttp_get_upgrade(parser: owned-c<llhttp__internal_s-c>): int8
-  c "llhttp_get_upgrade"
+pub extern external/llhttp_get_method(parser: intptr_t): int8
+  c inline "llhttp_get_method((llhttp_t*)#1)"
 
-pub fun wrapper/llhttp_get_upgrade(parser: owned-c<llhttp__internal_s-c>): int
-  external/llhttp_get_upgrade(parser).int
+pub fun wrapper/llhttp_get_method(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_method(koka-ptr).int
 
-pub extern external/llhttp_reset(parser: owned-c<llhttp__internal_s-c>): ()
-  c "llhttp_reset"
+pub extern external/llhttp_get_status_code(parser: intptr_t): int32
+  c inline "llhttp_get_status_code((llhttp_t*)#1)"
 
-pub extern external/llhttp_settings_init(settings: owned-c<llhttp_settings_s-c>): ()
-  c "llhttp_settings_init"
+pub fun wrapper/llhttp_get_status_code(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_status_code(koka-ptr).int
 
-pub extern external/llhttp_execute(parser: owned-c<llhttp__internal_s-c>, data: owned-c<int8>, len: ssize_t): int32
-  c "llhttp_execute"
+pub extern external/llhttp_get_upgrade(parser: intptr_t): int8
+  c inline "llhttp_get_upgrade((llhttp_t*)#1)"
 
-pub extern external/llhttp_finish1(parser: owned-c<llhttp__internal_s-c>): int32
-  c "llhttp_finish"
+pub fun wrapper/llhttp_get_upgrade(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_upgrade(koka-ptr).int
 
-pub extern external/llhttp_message_needs_eof(parser: owned-c<llhttp__internal_s-c>): int32
-  c "llhttp_message_needs_eof"
+pub extern external/llhttp_reset(parser: intptr_t): ()
+  c inline "llhttp_reset((llhttp_t*)#1)"
 
-pub extern external/llhttp_should_keep_alive(parser: owned-c<llhttp__internal_s-c>): int32
-  c "llhttp_should_keep_alive"
+pub fun wrapper/llhttp_reset(parser: owned-c<llhttp--internal-s-c>): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_reset(koka-ptr)
 
-pub extern external/llhttp_pause(parser: owned-c<llhttp__internal_s-c>): ()
-  c "llhttp_pause"
+pub extern external/llhttp_settings_init(settings: intptr_t): ()
+  c inline "llhttp_settings_init((llhttp_settings_t*)#1)"
 
-pub extern external/llhttp_resume(parser: owned-c<llhttp__internal_s-c>): ()
-  c "llhttp_resume"
+pub fun wrapper/llhttp_settings_init(settings: owned-c<llhttp-settings-s-c>): ()
+  with koka-ptr <- settings.with-ptr
+  external/llhttp_settings_init(koka-ptr)
 
-pub extern external/llhttp_resume_after_upgrade(parser: owned-c<llhttp__internal_s-c>): ()
-  c "llhttp_resume_after_upgrade"
+pub extern external/llhttp_execute(parser: intptr_t, data: intptr_t, len: ssize_t): int32
+  c inline "llhttp_execute((llhttp_t*)#1, (char*)#2, (ssize_t)#3)"
 
-pub extern external/llhttp_get_errno(parser: owned-c<llhttp__internal_s-c>): int32
-  c "llhttp_get_errno"
+pub fun wrapper/llhttp_execute(parser: owned-c<llhttp--internal-s-c>, data: owned-c<int8>, len: ssize_t): int32
+  with koka-ptr <- parser.with-ptr
+  with koka-ptr1 <- data.with-ptr
+  external/llhttp_execute(koka-ptr, koka-ptr1, len)
 
-pub extern external/llhttp_get_error_reason(parser: owned-c<llhttp__internal_s-c>): owned-c<int8>
-  c "llhttp_get_error_reason"
+pub extern external/llhttp_finish1(parser: intptr_t): int32
+  c inline "llhttp_finish((llhttp_t*)#1)"
 
-pub extern external/llhttp_set_error_reason(parser: owned-c<llhttp__internal_s-c>, reason: owned-c<int8>): ()
-  c "llhttp_set_error_reason"
+pub fun wrapper/llhttp_finish1(parser: owned-c<llhttp--internal-s-c>): int32
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_finish1(koka-ptr)
 
-pub extern external/llhttp_get_error_pos(parser: owned-c<llhttp__internal_s-c>): owned-c<int8>
-  c "llhttp_get_error_pos"
+pub extern external/llhttp_message_needs_eof(parser: intptr_t): int32
+  c inline "llhttp_message_needs_eof((llhttp_t*)#1)"
 
-pub extern external/llhttp_errno_name(err: int32): owned-c<int8>
-  c "llhttp_errno_name"
+pub fun wrapper/llhttp_message_needs_eof(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_message_needs_eof(koka-ptr).int
 
-pub extern external/llhttp_method_name(method: int32): owned-c<int8>
-  c "llhttp_method_name"
+pub extern external/llhttp_should_keep_alive(parser: intptr_t): int32
+  c inline "llhttp_should_keep_alive((llhttp_t*)#1)"
 
-pub extern external/llhttp_status_name(status: int32): owned-c<int8>
-  c "llhttp_status_name"
+pub fun wrapper/llhttp_should_keep_alive(parser: owned-c<llhttp--internal-s-c>): int
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_should_keep_alive(koka-ptr).int
 
-pub extern external/llhttp_set_lenient_headers(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_headers"
+pub extern external/llhttp_pause(parser: intptr_t): ()
+  c inline "llhttp_pause((llhttp_t*)#1)"
 
-pub extern external/llhttp_set_lenient_chunked_length(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_chunked_length"
+pub fun wrapper/llhttp_pause(parser: owned-c<llhttp--internal-s-c>): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_pause(koka-ptr)
 
-pub extern external/llhttp_set_lenient_keep_alive(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_keep_alive"
+pub extern external/llhttp_resume(parser: intptr_t): ()
+  c inline "llhttp_resume((llhttp_t*)#1)"
 
-pub extern external/llhttp_set_lenient_transfer_encoding(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_transfer_encoding"
+pub fun wrapper/llhttp_resume(parser: owned-c<llhttp--internal-s-c>): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_resume(koka-ptr)
 
-pub extern external/llhttp_set_lenient_version(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_version"
+pub extern external/llhttp_resume_after_upgrade(parser: intptr_t): ()
+  c inline "llhttp_resume_after_upgrade((llhttp_t*)#1)"
 
-pub extern external/llhttp_set_lenient_data_after_close(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_data_after_close"
+pub fun wrapper/llhttp_resume_after_upgrade(parser: owned-c<llhttp--internal-s-c>): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_resume_after_upgrade(koka-ptr)
 
-pub extern external/llhttp_set_lenient_optional_lf_after_cr(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_optional_lf_after_cr"
+pub extern external/llhttp_get_errno(parser: intptr_t): int32
+  c inline "llhttp_get_errno((llhttp_t*)#1)"
 
-pub extern external/llhttp_set_lenient_optional_cr_before_lf(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_optional_cr_before_lf"
+pub fun wrapper/llhttp_get_errno(parser: owned-c<llhttp--internal-s-c>): int32
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_errno(koka-ptr)
 
-pub extern external/llhttp_set_lenient_optional_crlf_after_chunk(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_optional_crlf_after_chunk"
+pub extern external/llhttp_get_error_reason(parser: intptr_t): intptr_t
+  c inline "llhttp_get_error_reason((llhttp_t*)#1)"
 
-pub extern external/llhttp_set_lenient_spaces_after_chunk_size(parser: owned-c<llhttp__internal_s-c>, enabled: int32): ()
-  c "llhttp_set_lenient_spaces_after_chunk_size"
+pub fun wrapper/llhttp_get_error_reason(parser: owned-c<llhttp--internal-s-c>): owned-c<int8>
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_error_reason(koka-ptr).c-own
+
+pub extern external/llhttp_set_error_reason(parser: intptr_t, reason: intptr_t): ()
+  c inline "llhttp_set_error_reason((llhttp_t*)#1, (char*)#2)"
+
+pub fun wrapper/llhttp_set_error_reason(parser: owned-c<llhttp--internal-s-c>, reason: owned-c<int8>): ()
+  with koka-ptr <- parser.with-ptr
+  with koka-ptr1 <- reason.with-ptr
+  external/llhttp_set_error_reason(koka-ptr, koka-ptr1)
+
+pub extern external/llhttp_get_error_pos(parser: intptr_t): intptr_t
+  c inline "llhttp_get_error_pos((llhttp_t*)#1)"
+
+pub fun wrapper/llhttp_get_error_pos(parser: owned-c<llhttp--internal-s-c>): owned-c<int8>
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_get_error_pos(koka-ptr).c-own
+
+pub extern external/llhttp_errno_name(err: int32): intptr_t
+  c inline "llhttp_errno_name((int32_t)#1)"
+
+pub fun wrapper/llhttp_errno_name(err: int32): owned-c<int8>
+  external/llhttp_errno_name(err).c-own
+
+pub extern external/llhttp_method_name(method: int32): intptr_t
+  c inline "llhttp_method_name((int32_t)#1)"
+
+pub fun wrapper/llhttp_method_name(method: int32): owned-c<int8>
+  external/llhttp_method_name(method).c-own
+
+pub extern external/llhttp_status_name(status: int32): intptr_t
+  c inline "llhttp_status_name((int32_t)#1)"
+
+pub fun wrapper/llhttp_status_name(status: int32): owned-c<int8>
+  external/llhttp_status_name(status).c-own
+
+pub extern external/llhttp_set_lenient_headers(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_headers((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_headers(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_headers(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_chunked_length(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_chunked_length((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_chunked_length(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_chunked_length(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_keep_alive(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_keep_alive((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_keep_alive(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_keep_alive(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_transfer_encoding(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_transfer_encoding((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_transfer_encoding(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_transfer_encoding(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_version(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_version((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_version(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_version(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_data_after_close(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_data_after_close((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_data_after_close(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_data_after_close(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_optional_lf_after_cr(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_optional_lf_after_cr((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_optional_lf_after_cr(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_optional_lf_after_cr(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_optional_cr_before_lf(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_optional_cr_before_lf((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_optional_cr_before_lf(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_optional_cr_before_lf(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_optional_crlf_after_chunk(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_optional_crlf_after_chunk((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_optional_crlf_after_chunk(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_optional_crlf_after_chunk(koka-ptr, enabled.int32)
+
+pub extern external/llhttp_set_lenient_spaces_after_chunk_size(parser: intptr_t, enabled: int32): ()
+  c inline "llhttp_set_lenient_spaces_after_chunk_size((llhttp_t*)#1, (int)#2)"
+
+pub fun wrapper/llhttp_set_lenient_spaces_after_chunk_size(parser: owned-c<llhttp--internal-s-c>, enabled: int): ()
+  with koka-ptr <- parser.with-ptr
+  external/llhttp_set_lenient_spaces_after_chunk_size(koka-ptr, enabled.int32)
 
 type llhttp_errno
   HPE_OK
@@ -811,495 +935,825 @@ pub fun int/llhttp_status(i: int): exn llhttp_status
     598 -> HTTP_STATUS_NETWORK_READ_TIMEOUT
     599 -> HTTP_STATUS_NETWORK_CONNECT_TIMEOUT
 
-pub struct llhttp_settings_s
-  on_message_begin: llhttp_cb
-  on_url: llhttp_data_cb
-  on_status: llhttp_data_cb
-  on_method: llhttp_data_cb
-  on_version: llhttp_data_cb
-  on_header_field: llhttp_data_cb
-  on_header_value: llhttp_data_cb
-  on_chunk_extension_name: llhttp_data_cb
-  on_chunk_extension_value: llhttp_data_cb
-  on_headers_complete: llhttp_cb
-  on_body: llhttp_data_cb
-  on_message_complete: llhttp_cb
-  on_url_complete: llhttp_cb
-  on_status_complete: llhttp_cb
-  on_method_complete: llhttp_cb
-  on_version_complete: llhttp_cb
-  on_header_field_complete: llhttp_cb
-  on_header_value_complete: llhttp_cb
-  on_chunk_extension_name_complete: llhttp_cb
-  on_chunk_extension_value_complete: llhttp_cb
-  on_chunk_header: llhttp_cb
-  on_chunk_complete: llhttp_cb
-  on_reset: llhttp_cb
+pub struct max-align-t
+pub type max-align-t-c
+pub alias max-align-tc = owned-c<max-align-t-c>
+pub alias max-align-tcb<s::S> = borrowed-c<s,max-align-t-c>
+pub alias max-align-tca = owned-c<c-array<max-align-t>>
+
+pub fun max-align-t/to-koka(s: max-align-tc): max-align-t
+  Max-align-t()
+
+pub struct llhttp-settings-s
+  on-message-begin: koka-llhttp_cb
+  on-url: koka-llhttp_data_cb
+  on-status: koka-llhttp_data_cb
+  on-method: koka-llhttp_data_cb
+  on-version: koka-llhttp_data_cb
+  on-header-field: koka-llhttp_data_cb
+  on-header-value: koka-llhttp_data_cb
+  on-chunk-extension-name: koka-llhttp_data_cb
+  on-chunk-extension-value: koka-llhttp_data_cb
+  on-headers-complete: koka-llhttp_cb
+  on-body: koka-llhttp_data_cb
+  on-message-complete: koka-llhttp_cb
+  on-url-complete: koka-llhttp_cb
+  on-status-complete: koka-llhttp_cb
+  on-method-complete: koka-llhttp_cb
+  on-version-complete: koka-llhttp_cb
+  on-header-field-complete: koka-llhttp_cb
+  on-header-value-complete: koka-llhttp_cb
+  on-chunk-extension-name-complete: koka-llhttp_cb
+  on-chunk-extension-value-complete: koka-llhttp_cb
+  on-chunk-header: koka-llhttp_cb
+  on-chunk-complete: koka-llhttp_cb
+  on-reset: koka-llhttp_cb
 
-pub type llhttp_settings_s-c
-alias llhttp_settings_sc = owned-c<llhttp_settings_s-c>
-alias llhttp_settings_scb<s> = borrowed-c<s,llhttp_settings_s-c>
-alias llhttp_settings_sca = owned-c<c-array<llhttp_settings_s-c>>
+pub type llhttp-settings-s-c
+pub alias llhttp-settings-sc = owned-c<llhttp-settings-s-c>
+pub alias llhttp-settings-scb<s::S> = borrowed-c<s,llhttp-settings-s-c>
+pub alias llhttp-settings-sca = owned-c<c-array<llhttp-settings-s>>
 
-extern llhttp_settings_s/size-of(c: c-null<llhttp_settings_s-c>): int32
-  c inline "sizeof(llhttp_settings_s)"
+extern llhttp-settings-s/size-of(c: c-null<llhttp-settings-s-c>): int32
+  c inline "sizeof(struct llhttp_settings_s)"
 
-pub fun llhttp_settings_sc(): llhttp_settings_sc
-  malloc()
+pub fun llhttp-settings-sc(): llhttp-settings-sc
+  malloc(?size-of=llhttp-settings-s/size-of)
 
-pub fun llhttp_settings_sc-calloc(): llhttp_settings_sc
-  malloc-c()
+pub fun llhttp-settings-sc-calloc(): llhttp-settings-sc
+  malloc-c(?size-of=llhttp-settings-s/size-of)
 
-pub fun llhttp_settings_sc-array(n: int): llhttp_settings_sca
-  malloc(n.int32)
+pub fun llhttp-settings-sc-array(n: int): llhttp-settings-sca
+  malloc(n.int32, ?size-of=llhttp-settings-s/size-of)
 
-pub fun llhttp_settings_sc-array-calloc(n: int): llhttp_settings_sca
-  malloc-c(n.int32)
+pub fun llhttp-settings-sc-array-calloc(n: int): llhttp-settings-sca
+  malloc-c(n.int32, ?size-of=llhttp-settings-s/size-of)
 
-inline extern llhttp_settings_s-ptr/on_message_begin(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_message_begin"
+inline extern llhttp-settings-s-ptr/on-message-begin(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_message_begin)"
 
-pub inline fun llhttp_settings_sc/on_message_begin(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_message_begin)
+pub inline fun llhttp-settings-sc/on-message-begin(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-message-begin)
 
-pub inline fun llhttp_settings_scb/on_message_begin(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_message_begin)
+pub inline fun llhttp-settings-scb/on-message-begin(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-message-begin)
 
-inline extern llhttp_settings_s-ptr/set-on_message_begin(s: intptr_t, on_message_begin: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_message_begin = #2"
+inline extern llhttp-settings-s-ptr/set-on-message-begin(s: intptr_t, on-message-begin: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_message_begin = (llhttp_cb)#2"
 
-pub inline fun llhttp_settings_sc/set-on_message_begin(^s: llhttp_settings_sc, on_message_begin: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_message_begin(on_message_begin))
+pub inline fun llhttp-settings-sc/set-on-message-begin(^s: llhttp-settings-sc, on-message-begin: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-begin(on-message-begin))
 
-pub inline fun llhttp_settings_scb/set-on_message_begin(^s: llhttp_settings_scb<s>, on_message_begin: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_message_begin(on_message_begin))
+pub inline fun llhttp-settings-scb/set-on-message-begin(^s: llhttp-settings-scb<s::S>, on-message-begin: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-begin(on-message-begin))
 
-inline extern llhttp_settings_s-ptr/on_url(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_url"
+pub inline fun llhttp-settings-sc-wrapper/on-message-begin(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-message-begin).c-own
 
-pub inline fun llhttp_settings_sc/on_url(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_url)
+pub inline fun llhttp-settings-scb-wrapper/on-message-begin(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-message-begin).c-own
 
-pub inline fun llhttp_settings_scb/on_url(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_url)
+pub inline fun llhttp-settings-sc-wrapper/set-on-message-begin(^s: llhttp-settings-sc, on-message-begin: koka-llhttp_cb): ()
+  with koka-ptr <- on-message-begin.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-begin(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/set-on_url(s: intptr_t, on_url: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_url = #2"
+pub inline fun llhttp-settings-scb-wrapper/set-on-message-begin(^s: llhttp-settings-scb<s::S>, on-message-begin: koka-llhttp_cb): ()
+  with koka-ptr <- on-message-begin.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-begin(koka-ptr))
 
-pub inline fun llhttp_settings_sc/set-on_url(^s: llhttp_settings_sc, on_url: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_url(on_url))
+inline extern llhttp-settings-s-ptr/on-url(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_url)"
 
-pub inline fun llhttp_settings_scb/set-on_url(^s: llhttp_settings_scb<s>, on_url: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_url(on_url))
+pub inline fun llhttp-settings-sc/on-url(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-url)
 
-inline extern llhttp_settings_s-ptr/on_status(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_status"
+pub inline fun llhttp-settings-scb/on-url(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-url)
 
-pub inline fun llhttp_settings_sc/on_status(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_status)
+inline extern llhttp-settings-s-ptr/set-on-url(s: intptr_t, on-url: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_url = (llhttp_data_cb)#2"
 
-pub inline fun llhttp_settings_scb/on_status(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_status)
+pub inline fun llhttp-settings-sc/set-on-url(^s: llhttp-settings-sc, on-url: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url(on-url))
 
-inline extern llhttp_settings_s-ptr/set-on_status(s: intptr_t, on_status: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_status = #2"
+pub inline fun llhttp-settings-scb/set-on-url(^s: llhttp-settings-scb<s::S>, on-url: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url(on-url))
 
-pub inline fun llhttp_settings_sc/set-on_status(^s: llhttp_settings_sc, on_status: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_status(on_status))
+pub inline fun llhttp-settings-sc-wrapper/on-url(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-url).c-own
 
-pub inline fun llhttp_settings_scb/set-on_status(^s: llhttp_settings_scb<s>, on_status: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_status(on_status))
+pub inline fun llhttp-settings-scb-wrapper/on-url(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-url).c-own
 
-inline extern llhttp_settings_s-ptr/on_method(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_method"
+pub inline fun llhttp-settings-sc-wrapper/set-on-url(^s: llhttp-settings-sc, on-url: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-url.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url(koka-ptr))
 
-pub inline fun llhttp_settings_sc/on_method(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_method)
+pub inline fun llhttp-settings-scb-wrapper/set-on-url(^s: llhttp-settings-scb<s::S>, on-url: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-url.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url(koka-ptr))
 
-pub inline fun llhttp_settings_scb/on_method(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_method)
+inline extern llhttp-settings-s-ptr/on-status(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_status)"
 
-inline extern llhttp_settings_s-ptr/set-on_method(s: intptr_t, on_method: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_method = #2"
+pub inline fun llhttp-settings-sc/on-status(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-status)
 
-pub inline fun llhttp_settings_sc/set-on_method(^s: llhttp_settings_sc, on_method: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_method(on_method))
+pub inline fun llhttp-settings-scb/on-status(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-status)
 
-pub inline fun llhttp_settings_scb/set-on_method(^s: llhttp_settings_scb<s>, on_method: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_method(on_method))
+inline extern llhttp-settings-s-ptr/set-on-status(s: intptr_t, on-status: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_status = (llhttp_data_cb)#2"
 
-inline extern llhttp_settings_s-ptr/on_version(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_version"
+pub inline fun llhttp-settings-sc/set-on-status(^s: llhttp-settings-sc, on-status: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status(on-status))
 
-pub inline fun llhttp_settings_sc/on_version(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_version)
+pub inline fun llhttp-settings-scb/set-on-status(^s: llhttp-settings-scb<s::S>, on-status: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status(on-status))
 
-pub inline fun llhttp_settings_scb/on_version(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_version)
+pub inline fun llhttp-settings-sc-wrapper/on-status(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-status).c-own
 
-inline extern llhttp_settings_s-ptr/set-on_version(s: intptr_t, on_version: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_version = #2"
+pub inline fun llhttp-settings-scb-wrapper/on-status(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-status).c-own
 
-pub inline fun llhttp_settings_sc/set-on_version(^s: llhttp_settings_sc, on_version: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_version(on_version))
+pub inline fun llhttp-settings-sc-wrapper/set-on-status(^s: llhttp-settings-sc, on-status: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-status.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status(koka-ptr))
 
-pub inline fun llhttp_settings_scb/set-on_version(^s: llhttp_settings_scb<s>, on_version: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_version(on_version))
+pub inline fun llhttp-settings-scb-wrapper/set-on-status(^s: llhttp-settings-scb<s::S>, on-status: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-status.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/on_header_field(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_header_field"
+inline extern llhttp-settings-s-ptr/on-method(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_method)"
 
-pub inline fun llhttp_settings_sc/on_header_field(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_field)
+pub inline fun llhttp-settings-sc/on-method(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-method)
 
-pub inline fun llhttp_settings_scb/on_header_field(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_field)
+pub inline fun llhttp-settings-scb/on-method(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-method)
 
-inline extern llhttp_settings_s-ptr/set-on_header_field(s: intptr_t, on_header_field: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_header_field = #2"
+inline extern llhttp-settings-s-ptr/set-on-method(s: intptr_t, on-method: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_method = (llhttp_data_cb)#2"
 
-pub inline fun llhttp_settings_sc/set-on_header_field(^s: llhttp_settings_sc, on_header_field: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_field(on_header_field))
+pub inline fun llhttp-settings-sc/set-on-method(^s: llhttp-settings-sc, on-method: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method(on-method))
 
-pub inline fun llhttp_settings_scb/set-on_header_field(^s: llhttp_settings_scb<s>, on_header_field: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_field(on_header_field))
+pub inline fun llhttp-settings-scb/set-on-method(^s: llhttp-settings-scb<s::S>, on-method: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method(on-method))
 
-inline extern llhttp_settings_s-ptr/on_header_value(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_header_value"
+pub inline fun llhttp-settings-sc-wrapper/on-method(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-method).c-own
 
-pub inline fun llhttp_settings_sc/on_header_value(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_value)
+pub inline fun llhttp-settings-scb-wrapper/on-method(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-method).c-own
 
-pub inline fun llhttp_settings_scb/on_header_value(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_value)
+pub inline fun llhttp-settings-sc-wrapper/set-on-method(^s: llhttp-settings-sc, on-method: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-method.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/set-on_header_value(s: intptr_t, on_header_value: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_header_value = #2"
+pub inline fun llhttp-settings-scb-wrapper/set-on-method(^s: llhttp-settings-scb<s::S>, on-method: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-method.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method(koka-ptr))
 
-pub inline fun llhttp_settings_sc/set-on_header_value(^s: llhttp_settings_sc, on_header_value: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_value(on_header_value))
+inline extern llhttp-settings-s-ptr/on-version(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_version)"
 
-pub inline fun llhttp_settings_scb/set-on_header_value(^s: llhttp_settings_scb<s>, on_header_value: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_value(on_header_value))
+pub inline fun llhttp-settings-sc/on-version(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-version)
 
-inline extern llhttp_settings_s-ptr/on_chunk_extension_name(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_name"
+pub inline fun llhttp-settings-scb/on-version(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-version)
 
-pub inline fun llhttp_settings_sc/on_chunk_extension_name(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_name)
+inline extern llhttp-settings-s-ptr/set-on-version(s: intptr_t, on-version: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_version = (llhttp_data_cb)#2"
 
-pub inline fun llhttp_settings_scb/on_chunk_extension_name(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_name)
+pub inline fun llhttp-settings-sc/set-on-version(^s: llhttp-settings-sc, on-version: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version(on-version))
 
-inline extern llhttp_settings_s-ptr/set-on_chunk_extension_name(s: intptr_t, on_chunk_extension_name: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_name = #2"
+pub inline fun llhttp-settings-scb/set-on-version(^s: llhttp-settings-scb<s::S>, on-version: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version(on-version))
 
-pub inline fun llhttp_settings_sc/set-on_chunk_extension_name(^s: llhttp_settings_sc, on_chunk_extension_name: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_name(on_chunk_extension_name))
+pub inline fun llhttp-settings-sc-wrapper/on-version(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-version).c-own
 
-pub inline fun llhttp_settings_scb/set-on_chunk_extension_name(^s: llhttp_settings_scb<s>, on_chunk_extension_name: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_name(on_chunk_extension_name))
+pub inline fun llhttp-settings-scb-wrapper/on-version(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-version).c-own
 
-inline extern llhttp_settings_s-ptr/on_chunk_extension_value(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_value"
+pub inline fun llhttp-settings-sc-wrapper/set-on-version(^s: llhttp-settings-sc, on-version: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-version.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version(koka-ptr))
 
-pub inline fun llhttp_settings_sc/on_chunk_extension_value(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_value)
+pub inline fun llhttp-settings-scb-wrapper/set-on-version(^s: llhttp-settings-scb<s::S>, on-version: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-version.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version(koka-ptr))
 
-pub inline fun llhttp_settings_scb/on_chunk_extension_value(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_value)
+inline extern llhttp-settings-s-ptr/on-header-field(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_header_field)"
 
-inline extern llhttp_settings_s-ptr/set-on_chunk_extension_value(s: intptr_t, on_chunk_extension_value: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_value = #2"
+pub inline fun llhttp-settings-sc/on-header-field(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field)
 
-pub inline fun llhttp_settings_sc/set-on_chunk_extension_value(^s: llhttp_settings_sc, on_chunk_extension_value: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_value(on_chunk_extension_value))
+pub inline fun llhttp-settings-scb/on-header-field(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field)
 
-pub inline fun llhttp_settings_scb/set-on_chunk_extension_value(^s: llhttp_settings_scb<s>, on_chunk_extension_value: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_value(on_chunk_extension_value))
+inline extern llhttp-settings-s-ptr/set-on-header-field(s: intptr_t, on-header-field: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_header_field = (llhttp_data_cb)#2"
 
-inline extern llhttp_settings_s-ptr/on_headers_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_headers_complete"
+pub inline fun llhttp-settings-sc/set-on-header-field(^s: llhttp-settings-sc, on-header-field: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field(on-header-field))
 
-pub inline fun llhttp_settings_sc/on_headers_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_headers_complete)
+pub inline fun llhttp-settings-scb/set-on-header-field(^s: llhttp-settings-scb<s::S>, on-header-field: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field(on-header-field))
 
-pub inline fun llhttp_settings_scb/on_headers_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_headers_complete)
+pub inline fun llhttp-settings-sc-wrapper/on-header-field(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field).c-own
 
-inline extern llhttp_settings_s-ptr/set-on_headers_complete(s: intptr_t, on_headers_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_headers_complete = #2"
+pub inline fun llhttp-settings-scb-wrapper/on-header-field(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field).c-own
 
-pub inline fun llhttp_settings_sc/set-on_headers_complete(^s: llhttp_settings_sc, on_headers_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_headers_complete(on_headers_complete))
+pub inline fun llhttp-settings-sc-wrapper/set-on-header-field(^s: llhttp-settings-sc, on-header-field: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-header-field.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field(koka-ptr))
 
-pub inline fun llhttp_settings_scb/set-on_headers_complete(^s: llhttp_settings_scb<s>, on_headers_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_headers_complete(on_headers_complete))
+pub inline fun llhttp-settings-scb-wrapper/set-on-header-field(^s: llhttp-settings-scb<s::S>, on-header-field: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-header-field.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/on_body(s: intptr_t): llhttp_data_cb
-  c inline "((llhttp_settings_s*)#1)->on_body"
+inline extern llhttp-settings-s-ptr/on-header-value(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_header_value)"
 
-pub inline fun llhttp_settings_sc/on_body(^s: llhttp_settings_sc): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_body)
+pub inline fun llhttp-settings-sc/on-header-value(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value)
 
-pub inline fun llhttp_settings_scb/on_body(^s: llhttp_settings_scb<s>): llhttp_data_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_body)
+pub inline fun llhttp-settings-scb/on-header-value(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value)
 
-inline extern llhttp_settings_s-ptr/set-on_body(s: intptr_t, on_body: llhttp_data_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_body = #2"
+inline extern llhttp-settings-s-ptr/set-on-header-value(s: intptr_t, on-header-value: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_header_value = (llhttp_data_cb)#2"
 
-pub inline fun llhttp_settings_sc/set-on_body(^s: llhttp_settings_sc, on_body: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_body(on_body))
+pub inline fun llhttp-settings-sc/set-on-header-value(^s: llhttp-settings-sc, on-header-value: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value(on-header-value))
 
-pub inline fun llhttp_settings_scb/set-on_body(^s: llhttp_settings_scb<s>, on_body: llhttp_data_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_body(on_body))
+pub inline fun llhttp-settings-scb/set-on-header-value(^s: llhttp-settings-scb<s::S>, on-header-value: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value(on-header-value))
 
-inline extern llhttp_settings_s-ptr/on_message_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_message_complete"
+pub inline fun llhttp-settings-sc-wrapper/on-header-value(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value).c-own
 
-pub inline fun llhttp_settings_sc/on_message_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_message_complete)
+pub inline fun llhttp-settings-scb-wrapper/on-header-value(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value).c-own
 
-pub inline fun llhttp_settings_scb/on_message_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_message_complete)
+pub inline fun llhttp-settings-sc-wrapper/set-on-header-value(^s: llhttp-settings-sc, on-header-value: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-header-value.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/set-on_message_complete(s: intptr_t, on_message_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_message_complete = #2"
+pub inline fun llhttp-settings-scb-wrapper/set-on-header-value(^s: llhttp-settings-scb<s::S>, on-header-value: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-header-value.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value(koka-ptr))
 
-pub inline fun llhttp_settings_sc/set-on_message_complete(^s: llhttp_settings_sc, on_message_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_message_complete(on_message_complete))
+inline extern llhttp-settings-s-ptr/on-chunk-extension-name(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_chunk_extension_name)"
 
-pub inline fun llhttp_settings_scb/set-on_message_complete(^s: llhttp_settings_scb<s>, on_message_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_message_complete(on_message_complete))
+pub inline fun llhttp-settings-sc/on-chunk-extension-name(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name)
 
-inline extern llhttp_settings_s-ptr/on_url_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_url_complete"
+pub inline fun llhttp-settings-scb/on-chunk-extension-name(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name)
 
-pub inline fun llhttp_settings_sc/on_url_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_url_complete)
+inline extern llhttp-settings-s-ptr/set-on-chunk-extension-name(s: intptr_t, on-chunk-extension-name: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_chunk_extension_name = (llhttp_data_cb)#2"
 
-pub inline fun llhttp_settings_scb/on_url_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_url_complete)
+pub inline fun llhttp-settings-sc/set-on-chunk-extension-name(^s: llhttp-settings-sc, on-chunk-extension-name: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name(on-chunk-extension-name))
 
-inline extern llhttp_settings_s-ptr/set-on_url_complete(s: intptr_t, on_url_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_url_complete = #2"
+pub inline fun llhttp-settings-scb/set-on-chunk-extension-name(^s: llhttp-settings-scb<s::S>, on-chunk-extension-name: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name(on-chunk-extension-name))
 
-pub inline fun llhttp_settings_sc/set-on_url_complete(^s: llhttp_settings_sc, on_url_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_url_complete(on_url_complete))
+pub inline fun llhttp-settings-sc-wrapper/on-chunk-extension-name(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name).c-own
 
-pub inline fun llhttp_settings_scb/set-on_url_complete(^s: llhttp_settings_scb<s>, on_url_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_url_complete(on_url_complete))
+pub inline fun llhttp-settings-scb-wrapper/on-chunk-extension-name(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name).c-own
 
-inline extern llhttp_settings_s-ptr/on_status_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_status_complete"
+pub inline fun llhttp-settings-sc-wrapper/set-on-chunk-extension-name(^s: llhttp-settings-sc, on-chunk-extension-name: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-chunk-extension-name.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name(koka-ptr))
 
-pub inline fun llhttp_settings_sc/on_status_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_status_complete)
+pub inline fun llhttp-settings-scb-wrapper/set-on-chunk-extension-name(^s: llhttp-settings-scb<s::S>, on-chunk-extension-name: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-chunk-extension-name.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name(koka-ptr))
 
-pub inline fun llhttp_settings_scb/on_status_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_status_complete)
+inline extern llhttp-settings-s-ptr/on-chunk-extension-value(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_chunk_extension_value)"
 
-inline extern llhttp_settings_s-ptr/set-on_status_complete(s: intptr_t, on_status_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_status_complete = #2"
+pub inline fun llhttp-settings-sc/on-chunk-extension-value(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value)
 
-pub inline fun llhttp_settings_sc/set-on_status_complete(^s: llhttp_settings_sc, on_status_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_status_complete(on_status_complete))
+pub inline fun llhttp-settings-scb/on-chunk-extension-value(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value)
 
-pub inline fun llhttp_settings_scb/set-on_status_complete(^s: llhttp_settings_scb<s>, on_status_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_status_complete(on_status_complete))
+inline extern llhttp-settings-s-ptr/set-on-chunk-extension-value(s: intptr_t, on-chunk-extension-value: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_chunk_extension_value = (llhttp_data_cb)#2"
 
-inline extern llhttp_settings_s-ptr/on_method_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_method_complete"
+pub inline fun llhttp-settings-sc/set-on-chunk-extension-value(^s: llhttp-settings-sc, on-chunk-extension-value: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value(on-chunk-extension-value))
 
-pub inline fun llhttp_settings_sc/on_method_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_method_complete)
+pub inline fun llhttp-settings-scb/set-on-chunk-extension-value(^s: llhttp-settings-scb<s::S>, on-chunk-extension-value: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value(on-chunk-extension-value))
 
-pub inline fun llhttp_settings_scb/on_method_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_method_complete)
+pub inline fun llhttp-settings-sc-wrapper/on-chunk-extension-value(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value).c-own
 
-inline extern llhttp_settings_s-ptr/set-on_method_complete(s: intptr_t, on_method_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_method_complete = #2"
+pub inline fun llhttp-settings-scb-wrapper/on-chunk-extension-value(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value).c-own
 
-pub inline fun llhttp_settings_sc/set-on_method_complete(^s: llhttp_settings_sc, on_method_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_method_complete(on_method_complete))
+pub inline fun llhttp-settings-sc-wrapper/set-on-chunk-extension-value(^s: llhttp-settings-sc, on-chunk-extension-value: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-chunk-extension-value.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value(koka-ptr))
 
-pub inline fun llhttp_settings_scb/set-on_method_complete(^s: llhttp_settings_scb<s>, on_method_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_method_complete(on_method_complete))
+pub inline fun llhttp-settings-scb-wrapper/set-on-chunk-extension-value(^s: llhttp-settings-scb<s::S>, on-chunk-extension-value: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-chunk-extension-value.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/on_version_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_version_complete"
+inline extern llhttp-settings-s-ptr/on-headers-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_headers_complete)"
 
-pub inline fun llhttp_settings_sc/on_version_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_version_complete)
+pub inline fun llhttp-settings-sc/on-headers-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-headers-complete)
 
-pub inline fun llhttp_settings_scb/on_version_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_version_complete)
+pub inline fun llhttp-settings-scb/on-headers-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-headers-complete)
 
-inline extern llhttp_settings_s-ptr/set-on_version_complete(s: intptr_t, on_version_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_version_complete = #2"
+inline extern llhttp-settings-s-ptr/set-on-headers-complete(s: intptr_t, on-headers-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_headers_complete = (llhttp_cb)#2"
 
-pub inline fun llhttp_settings_sc/set-on_version_complete(^s: llhttp_settings_sc, on_version_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_version_complete(on_version_complete))
+pub inline fun llhttp-settings-sc/set-on-headers-complete(^s: llhttp-settings-sc, on-headers-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-headers-complete(on-headers-complete))
 
-pub inline fun llhttp_settings_scb/set-on_version_complete(^s: llhttp_settings_scb<s>, on_version_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_version_complete(on_version_complete))
+pub inline fun llhttp-settings-scb/set-on-headers-complete(^s: llhttp-settings-scb<s::S>, on-headers-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-headers-complete(on-headers-complete))
 
-inline extern llhttp_settings_s-ptr/on_header_field_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_header_field_complete"
+pub inline fun llhttp-settings-sc-wrapper/on-headers-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-headers-complete).c-own
 
-pub inline fun llhttp_settings_sc/on_header_field_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_field_complete)
+pub inline fun llhttp-settings-scb-wrapper/on-headers-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-headers-complete).c-own
 
-pub inline fun llhttp_settings_scb/on_header_field_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_field_complete)
+pub inline fun llhttp-settings-sc-wrapper/set-on-headers-complete(^s: llhttp-settings-sc, on-headers-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-headers-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-headers-complete(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/set-on_header_field_complete(s: intptr_t, on_header_field_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_header_field_complete = #2"
+pub inline fun llhttp-settings-scb-wrapper/set-on-headers-complete(^s: llhttp-settings-scb<s::S>, on-headers-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-headers-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-headers-complete(koka-ptr))
 
-pub inline fun llhttp_settings_sc/set-on_header_field_complete(^s: llhttp_settings_sc, on_header_field_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_field_complete(on_header_field_complete))
+inline extern llhttp-settings-s-ptr/on-body(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_body)"
 
-pub inline fun llhttp_settings_scb/set-on_header_field_complete(^s: llhttp_settings_scb<s>, on_header_field_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_field_complete(on_header_field_complete))
+pub inline fun llhttp-settings-sc/on-body(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-body)
 
-inline extern llhttp_settings_s-ptr/on_header_value_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_header_value_complete"
+pub inline fun llhttp-settings-scb/on-body(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-body)
 
-pub inline fun llhttp_settings_sc/on_header_value_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_value_complete)
+inline extern llhttp-settings-s-ptr/set-on-body(s: intptr_t, on-body: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_body = (llhttp_data_cb)#2"
 
-pub inline fun llhttp_settings_scb/on_header_value_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_header_value_complete)
+pub inline fun llhttp-settings-sc/set-on-body(^s: llhttp-settings-sc, on-body: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-body(on-body))
 
-inline extern llhttp_settings_s-ptr/set-on_header_value_complete(s: intptr_t, on_header_value_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_header_value_complete = #2"
+pub inline fun llhttp-settings-scb/set-on-body(^s: llhttp-settings-scb<s::S>, on-body: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-body(on-body))
 
-pub inline fun llhttp_settings_sc/set-on_header_value_complete(^s: llhttp_settings_sc, on_header_value_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_value_complete(on_header_value_complete))
+pub inline fun llhttp-settings-sc-wrapper/on-body(^s: llhttp-settings-sc): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-body).c-own
 
-pub inline fun llhttp_settings_scb/set-on_header_value_complete(^s: llhttp_settings_scb<s>, on_header_value_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_header_value_complete(on_header_value_complete))
+pub inline fun llhttp-settings-scb-wrapper/on-body(^s: llhttp-settings-scb<s::S>): koka-llhttp_data_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-body).c-own
 
-inline extern llhttp_settings_s-ptr/on_chunk_extension_name_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_name_complete"
+pub inline fun llhttp-settings-sc-wrapper/set-on-body(^s: llhttp-settings-sc, on-body: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-body.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-body(koka-ptr))
 
-pub inline fun llhttp_settings_sc/on_chunk_extension_name_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_name_complete)
+pub inline fun llhttp-settings-scb-wrapper/set-on-body(^s: llhttp-settings-scb<s::S>, on-body: koka-llhttp_data_cb): ()
+  with koka-ptr <- on-body.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-body(koka-ptr))
 
-pub inline fun llhttp_settings_scb/on_chunk_extension_name_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_name_complete)
+inline extern llhttp-settings-s-ptr/on-message-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_message_complete)"
 
-inline extern llhttp_settings_s-ptr/set-on_chunk_extension_name_complete(s: intptr_t, on_chunk_extension_name_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_name_complete = #2"
+pub inline fun llhttp-settings-sc/on-message-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-message-complete)
 
-pub inline fun llhttp_settings_sc/set-on_chunk_extension_name_complete(^s: llhttp_settings_sc, on_chunk_extension_name_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_name_complete(on_chunk_extension_name_complete))
+pub inline fun llhttp-settings-scb/on-message-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-message-complete)
 
-pub inline fun llhttp_settings_scb/set-on_chunk_extension_name_complete(^s: llhttp_settings_scb<s>, on_chunk_extension_name_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_name_complete(on_chunk_extension_name_complete))
+inline extern llhttp-settings-s-ptr/set-on-message-complete(s: intptr_t, on-message-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_message_complete = (llhttp_cb)#2"
 
-inline extern llhttp_settings_s-ptr/on_chunk_extension_value_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_value_complete"
+pub inline fun llhttp-settings-sc/set-on-message-complete(^s: llhttp-settings-sc, on-message-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-complete(on-message-complete))
 
-pub inline fun llhttp_settings_sc/on_chunk_extension_value_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_value_complete)
+pub inline fun llhttp-settings-scb/set-on-message-complete(^s: llhttp-settings-scb<s::S>, on-message-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-complete(on-message-complete))
 
-pub inline fun llhttp_settings_scb/on_chunk_extension_value_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_extension_value_complete)
+pub inline fun llhttp-settings-sc-wrapper/on-message-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-message-complete).c-own
 
-inline extern llhttp_settings_s-ptr/set-on_chunk_extension_value_complete(s: intptr_t, on_chunk_extension_value_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_chunk_extension_value_complete = #2"
+pub inline fun llhttp-settings-scb-wrapper/on-message-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-message-complete).c-own
 
-pub inline fun llhttp_settings_sc/set-on_chunk_extension_value_complete(^s: llhttp_settings_sc, on_chunk_extension_value_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_value_complete(on_chunk_extension_value_complete))
+pub inline fun llhttp-settings-sc-wrapper/set-on-message-complete(^s: llhttp-settings-sc, on-message-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-message-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-complete(koka-ptr))
 
-pub inline fun llhttp_settings_scb/set-on_chunk_extension_value_complete(^s: llhttp_settings_scb<s>, on_chunk_extension_value_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_extension_value_complete(on_chunk_extension_value_complete))
+pub inline fun llhttp-settings-scb-wrapper/set-on-message-complete(^s: llhttp-settings-scb<s::S>, on-message-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-message-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-message-complete(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/on_chunk_header(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_chunk_header"
+inline extern llhttp-settings-s-ptr/on-url-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_url_complete)"
 
-pub inline fun llhttp_settings_sc/on_chunk_header(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_header)
+pub inline fun llhttp-settings-sc/on-url-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-url-complete)
 
-pub inline fun llhttp_settings_scb/on_chunk_header(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_header)
+pub inline fun llhttp-settings-scb/on-url-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-url-complete)
 
-inline extern llhttp_settings_s-ptr/set-on_chunk_header(s: intptr_t, on_chunk_header: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_chunk_header = #2"
+inline extern llhttp-settings-s-ptr/set-on-url-complete(s: intptr_t, on-url-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_url_complete = (llhttp_cb)#2"
 
-pub inline fun llhttp_settings_sc/set-on_chunk_header(^s: llhttp_settings_sc, on_chunk_header: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_header(on_chunk_header))
+pub inline fun llhttp-settings-sc/set-on-url-complete(^s: llhttp-settings-sc, on-url-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url-complete(on-url-complete))
 
-pub inline fun llhttp_settings_scb/set-on_chunk_header(^s: llhttp_settings_scb<s>, on_chunk_header: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_header(on_chunk_header))
+pub inline fun llhttp-settings-scb/set-on-url-complete(^s: llhttp-settings-scb<s::S>, on-url-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url-complete(on-url-complete))
 
-inline extern llhttp_settings_s-ptr/on_chunk_complete(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_chunk_complete"
+pub inline fun llhttp-settings-sc-wrapper/on-url-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-url-complete).c-own
 
-pub inline fun llhttp_settings_sc/on_chunk_complete(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_complete)
+pub inline fun llhttp-settings-scb-wrapper/on-url-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-url-complete).c-own
 
-pub inline fun llhttp_settings_scb/on_chunk_complete(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_chunk_complete)
+pub inline fun llhttp-settings-sc-wrapper/set-on-url-complete(^s: llhttp-settings-sc, on-url-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-url-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url-complete(koka-ptr))
 
-inline extern llhttp_settings_s-ptr/set-on_chunk_complete(s: intptr_t, on_chunk_complete: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_chunk_complete = #2"
+pub inline fun llhttp-settings-scb-wrapper/set-on-url-complete(^s: llhttp-settings-scb<s::S>, on-url-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-url-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-url-complete(koka-ptr))
 
-pub inline fun llhttp_settings_sc/set-on_chunk_complete(^s: llhttp_settings_sc, on_chunk_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_complete(on_chunk_complete))
+inline extern llhttp-settings-s-ptr/on-status-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_status_complete)"
 
-pub inline fun llhttp_settings_scb/set-on_chunk_complete(^s: llhttp_settings_scb<s>, on_chunk_complete: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_chunk_complete(on_chunk_complete))
+pub inline fun llhttp-settings-sc/on-status-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-status-complete)
 
-inline extern llhttp_settings_s-ptr/on_reset(s: intptr_t): llhttp_cb
-  c inline "((llhttp_settings_s*)#1)->on_reset"
+pub inline fun llhttp-settings-scb/on-status-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-status-complete)
 
-pub inline fun llhttp_settings_sc/on_reset(^s: llhttp_settings_sc): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_reset)
+inline extern llhttp-settings-s-ptr/set-on-status-complete(s: intptr_t, on-status-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_status_complete = (llhttp_cb)#2"
 
-pub inline fun llhttp_settings_scb/on_reset(^s: llhttp_settings_scb<s>): llhttp_cb
-  s.with-ptr(llhttp_settings_s-ptr/on_reset)
+pub inline fun llhttp-settings-sc/set-on-status-complete(^s: llhttp-settings-sc, on-status-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status-complete(on-status-complete))
 
-inline extern llhttp_settings_s-ptr/set-on_reset(s: intptr_t, on_reset: llhttp_cb): ()
-  c inline "((llhttp_settings_s*)#1)->on_reset = #2"
+pub inline fun llhttp-settings-scb/set-on-status-complete(^s: llhttp-settings-scb<s::S>, on-status-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status-complete(on-status-complete))
 
-pub inline fun llhttp_settings_sc/set-on_reset(^s: llhttp_settings_sc, on_reset: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_reset(on_reset))
+pub inline fun llhttp-settings-sc-wrapper/on-status-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-status-complete).c-own
 
-pub inline fun llhttp_settings_scb/set-on_reset(^s: llhttp_settings_scb<s>, on_reset: llhttp_cb): ()
-  s.with-ptr(fn(p) p.llhttp_settings_s-ptr/set-on_reset(on_reset))
+pub inline fun llhttp-settings-scb-wrapper/on-status-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-status-complete).c-own
 
-pub fun llhttp_settings_s/to-koka(s: llhttp_settings_sc): llhttp_settings_s
-  Llhttp_settings_s(s.on_message_begin, s.on_url, s.on_status, s.on_method, s.on_version, s.on_header_field, s.on_header_value, s.on_chunk_extension_name, s.on_chunk_extension_value, s.on_headers_complete, s.on_body, s.on_message_complete, s.on_url_complete, s.on_status_complete, s.on_method_complete, s.on_version_complete, s.on_header_field_complete, s.on_header_value_complete, s.on_chunk_extension_name_complete, s.on_chunk_extension_value_complete, s.on_chunk_header, s.on_chunk_complete, s.on_reset)
-alias llhttp_cb = owned-c<llhttp_cbfn>
-alias llhttp_cbfn = ((owned-c<llhttp__internal_s-c> ) -> int32)
-alias llhttp_t = llhttp__internal_s-c
-alias koka-llhttp_t = llhttp__internal_s-c
-pub type llhttp__internal_s-c
-alias llhttp__internal_sc = owned-c<llhttp__internal_s-c>
-alias llhttp__internal_scb<s> = borrowed-c<s,llhttp__internal_s-c>
-alias llhttp__internal_sca = owned-c<c-array<llhttp__internal_s-c>>
+pub inline fun llhttp-settings-sc-wrapper/set-on-status-complete(^s: llhttp-settings-sc, on-status-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-status-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status-complete(koka-ptr))
 
-alias llhttp_data_cb = owned-c<llhttp_data_cbfn>
-alias llhttp_data_cbfn = ((owned-c<llhttp__internal_s-c> , owned-c<int8> , ssize_t ) -> int32)
-alias llhttp_settings_t = llhttp_settings_s-c
-alias koka-llhttp_settings_t = llhttp_settings_s
+pub inline fun llhttp-settings-scb-wrapper/set-on-status-complete(^s: llhttp-settings-scb<s::S>, on-status-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-status-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-status-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-method-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_method_complete)"
+
+pub inline fun llhttp-settings-sc/on-method-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-method-complete)
+
+pub inline fun llhttp-settings-scb/on-method-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-method-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-method-complete(s: intptr_t, on-method-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_method_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-method-complete(^s: llhttp-settings-sc, on-method-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method-complete(on-method-complete))
+
+pub inline fun llhttp-settings-scb/set-on-method-complete(^s: llhttp-settings-scb<s::S>, on-method-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method-complete(on-method-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-method-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-method-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-method-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-method-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-method-complete(^s: llhttp-settings-sc, on-method-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-method-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-method-complete(^s: llhttp-settings-scb<s::S>, on-method-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-method-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-method-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-version-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_version_complete)"
+
+pub inline fun llhttp-settings-sc/on-version-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-version-complete)
+
+pub inline fun llhttp-settings-scb/on-version-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-version-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-version-complete(s: intptr_t, on-version-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_version_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-version-complete(^s: llhttp-settings-sc, on-version-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version-complete(on-version-complete))
+
+pub inline fun llhttp-settings-scb/set-on-version-complete(^s: llhttp-settings-scb<s::S>, on-version-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version-complete(on-version-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-version-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-version-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-version-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-version-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-version-complete(^s: llhttp-settings-sc, on-version-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-version-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-version-complete(^s: llhttp-settings-scb<s::S>, on-version-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-version-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-version-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-header-field-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_header_field_complete)"
+
+pub inline fun llhttp-settings-sc/on-header-field-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field-complete)
+
+pub inline fun llhttp-settings-scb/on-header-field-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-header-field-complete(s: intptr_t, on-header-field-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_header_field_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-header-field-complete(^s: llhttp-settings-sc, on-header-field-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field-complete(on-header-field-complete))
+
+pub inline fun llhttp-settings-scb/set-on-header-field-complete(^s: llhttp-settings-scb<s::S>, on-header-field-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field-complete(on-header-field-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-header-field-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-header-field-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-field-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-header-field-complete(^s: llhttp-settings-sc, on-header-field-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-header-field-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-header-field-complete(^s: llhttp-settings-scb<s::S>, on-header-field-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-header-field-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-field-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-header-value-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_header_value_complete)"
+
+pub inline fun llhttp-settings-sc/on-header-value-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value-complete)
+
+pub inline fun llhttp-settings-scb/on-header-value-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-header-value-complete(s: intptr_t, on-header-value-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_header_value_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-header-value-complete(^s: llhttp-settings-sc, on-header-value-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value-complete(on-header-value-complete))
+
+pub inline fun llhttp-settings-scb/set-on-header-value-complete(^s: llhttp-settings-scb<s::S>, on-header-value-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value-complete(on-header-value-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-header-value-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-header-value-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-header-value-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-header-value-complete(^s: llhttp-settings-sc, on-header-value-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-header-value-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-header-value-complete(^s: llhttp-settings-scb<s::S>, on-header-value-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-header-value-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-header-value-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-chunk-extension-name-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_chunk_extension_name_complete)"
+
+pub inline fun llhttp-settings-sc/on-chunk-extension-name-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name-complete)
+
+pub inline fun llhttp-settings-scb/on-chunk-extension-name-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-chunk-extension-name-complete(s: intptr_t, on-chunk-extension-name-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_chunk_extension_name_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-chunk-extension-name-complete(^s: llhttp-settings-sc, on-chunk-extension-name-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name-complete(on-chunk-extension-name-complete))
+
+pub inline fun llhttp-settings-scb/set-on-chunk-extension-name-complete(^s: llhttp-settings-scb<s::S>, on-chunk-extension-name-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name-complete(on-chunk-extension-name-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-chunk-extension-name-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-chunk-extension-name-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-name-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-chunk-extension-name-complete(^s: llhttp-settings-sc, on-chunk-extension-name-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-extension-name-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-chunk-extension-name-complete(^s: llhttp-settings-scb<s::S>, on-chunk-extension-name-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-extension-name-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-name-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-chunk-extension-value-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_chunk_extension_value_complete)"
+
+pub inline fun llhttp-settings-sc/on-chunk-extension-value-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value-complete)
+
+pub inline fun llhttp-settings-scb/on-chunk-extension-value-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-chunk-extension-value-complete(s: intptr_t, on-chunk-extension-value-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_chunk_extension_value_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-chunk-extension-value-complete(^s: llhttp-settings-sc, on-chunk-extension-value-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value-complete(on-chunk-extension-value-complete))
+
+pub inline fun llhttp-settings-scb/set-on-chunk-extension-value-complete(^s: llhttp-settings-scb<s::S>, on-chunk-extension-value-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value-complete(on-chunk-extension-value-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-chunk-extension-value-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-chunk-extension-value-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-extension-value-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-chunk-extension-value-complete(^s: llhttp-settings-sc, on-chunk-extension-value-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-extension-value-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-chunk-extension-value-complete(^s: llhttp-settings-scb<s::S>, on-chunk-extension-value-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-extension-value-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-extension-value-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-chunk-header(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_chunk_header)"
+
+pub inline fun llhttp-settings-sc/on-chunk-header(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-header)
+
+pub inline fun llhttp-settings-scb/on-chunk-header(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-header)
+
+inline extern llhttp-settings-s-ptr/set-on-chunk-header(s: intptr_t, on-chunk-header: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_chunk_header = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-chunk-header(^s: llhttp-settings-sc, on-chunk-header: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-header(on-chunk-header))
+
+pub inline fun llhttp-settings-scb/set-on-chunk-header(^s: llhttp-settings-scb<s::S>, on-chunk-header: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-header(on-chunk-header))
+
+pub inline fun llhttp-settings-sc-wrapper/on-chunk-header(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-header).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-chunk-header(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-header).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-chunk-header(^s: llhttp-settings-sc, on-chunk-header: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-header.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-header(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-chunk-header(^s: llhttp-settings-scb<s::S>, on-chunk-header: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-header.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-header(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-chunk-complete(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_chunk_complete)"
+
+pub inline fun llhttp-settings-sc/on-chunk-complete(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-complete)
+
+pub inline fun llhttp-settings-scb/on-chunk-complete(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-complete)
+
+inline extern llhttp-settings-s-ptr/set-on-chunk-complete(s: intptr_t, on-chunk-complete: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_chunk_complete = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-chunk-complete(^s: llhttp-settings-sc, on-chunk-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-complete(on-chunk-complete))
+
+pub inline fun llhttp-settings-scb/set-on-chunk-complete(^s: llhttp-settings-scb<s::S>, on-chunk-complete: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-complete(on-chunk-complete))
+
+pub inline fun llhttp-settings-sc-wrapper/on-chunk-complete(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-complete).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-chunk-complete(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-chunk-complete).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-chunk-complete(^s: llhttp-settings-sc, on-chunk-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-complete(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-chunk-complete(^s: llhttp-settings-scb<s::S>, on-chunk-complete: koka-llhttp_cb): ()
+  with koka-ptr <- on-chunk-complete.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-chunk-complete(koka-ptr))
+
+inline extern llhttp-settings-s-ptr/on-reset(s: intptr_t): intptr_t
+  c inline "(intptr_t)(((struct llhttp_settings_s*)#1)->on_reset)"
+
+pub inline fun llhttp-settings-sc/on-reset(^s: llhttp-settings-sc): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-reset)
+
+pub inline fun llhttp-settings-scb/on-reset(^s: llhttp-settings-scb<s::S>): intptr_t
+  s.with-ptr(llhttp-settings-s-ptr/on-reset)
+
+inline extern llhttp-settings-s-ptr/set-on-reset(s: intptr_t, on-reset: intptr_t): ()
+  c inline "((struct llhttp_settings_s*)#1)->on_reset = (llhttp_cb)#2"
+
+pub inline fun llhttp-settings-sc/set-on-reset(^s: llhttp-settings-sc, on-reset: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-reset(on-reset))
+
+pub inline fun llhttp-settings-scb/set-on-reset(^s: llhttp-settings-scb<s::S>, on-reset: intptr_t): ()
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-reset(on-reset))
+
+pub inline fun llhttp-settings-sc-wrapper/on-reset(^s: llhttp-settings-sc): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-reset).c-own
+
+pub inline fun llhttp-settings-scb-wrapper/on-reset(^s: llhttp-settings-scb<s::S>): koka-llhttp_cb
+  s.with-ptr(llhttp-settings-s-ptr/on-reset).c-own
+
+pub inline fun llhttp-settings-sc-wrapper/set-on-reset(^s: llhttp-settings-sc, on-reset: koka-llhttp_cb): ()
+  with koka-ptr <- on-reset.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-reset(koka-ptr))
+
+pub inline fun llhttp-settings-scb-wrapper/set-on-reset(^s: llhttp-settings-scb<s::S>, on-reset: koka-llhttp_cb): ()
+  with koka-ptr <- on-reset.with-ptr
+  s.with-ptr(fn(kk-internal-ptr) kk-internal-ptr.llhttp-settings-s-ptr/set-on-reset(koka-ptr))
+
+pub fun llhttp-settings-s/to-koka(s: llhttp-settings-sc): llhttp-settings-s
+  Llhttp-settings-s(s.llhttp-settings-sc/on-message-begin.c-own, s.llhttp-settings-sc/on-url.c-own, s.llhttp-settings-sc/on-status.c-own, s.llhttp-settings-sc/on-method.c-own, s.llhttp-settings-sc/on-version.c-own, s.llhttp-settings-sc/on-header-field.c-own, s.llhttp-settings-sc/on-header-value.c-own, s.llhttp-settings-sc/on-chunk-extension-name.c-own, s.llhttp-settings-sc/on-chunk-extension-value.c-own, s.llhttp-settings-sc/on-headers-complete.c-own, s.llhttp-settings-sc/on-body.c-own, s.llhttp-settings-sc/on-message-complete.c-own, s.llhttp-settings-sc/on-url-complete.c-own, s.llhttp-settings-sc/on-status-complete.c-own, s.llhttp-settings-sc/on-method-complete.c-own, s.llhttp-settings-sc/on-version-complete.c-own, s.llhttp-settings-sc/on-header-field-complete.c-own, s.llhttp-settings-sc/on-header-value-complete.c-own, s.llhttp-settings-sc/on-chunk-extension-name-complete.c-own, s.llhttp-settings-sc/on-chunk-extension-value-complete.c-own, s.llhttp-settings-sc/on-chunk-header.c-own, s.llhttp-settings-sc/on-chunk-complete.c-own, s.llhttp-settings-sc/on-reset.c-own)
+
+alias llhttp-cb = intptr_t
+alias koka-llhttp_cb = owned-c<((intptr_t) -> int32)>
+alias llhttp-cbfn = ((intptr_t) -> int32)
+alias koka-llhttp_cbfn = ((owned-c<llhttp--internal-s-c>) -> int)
+alias llhttp-t = llhttp--internal-s-c
+alias koka-llhttp_t = llhttp--internal-s
+pub struct llhttp--internal-s
+pub type llhttp--internal-s-c
+pub alias llhttp--internal-sc = owned-c<llhttp--internal-s-c>
+pub alias llhttp--internal-scb<s::S> = borrowed-c<s,llhttp--internal-s-c>
+pub alias llhttp--internal-sca = owned-c<c-array<llhttp--internal-s>>
+
+pub fun llhttp--internal-s/to-koka(s: llhttp--internal-sc): llhttp--internal-s
+  Llhttp--internal-s()
+
+alias llhttp-data-cb = intptr_t
+alias koka-llhttp_data_cb = owned-c<((intptr_t, intptr_t, ssize_t) -> int32)>
+alias llhttp-data-cbfn = ((intptr_t, intptr_t, ssize_t) -> int32)
+alias koka-llhttp_data_cbfn = ((owned-c<llhttp--internal-s-c>, owned-c<int8>, ssize_t) -> int)
+alias llhttp-settings-t = llhttp-settings-s-c
+alias koka-llhttp_settings_t = llhttp-settings-s
 pub val kllhttp_version_major: int = 9
 
 pub val kllhttp_version_minor: int = 2
 
 pub val kllhttp_version_patch: int = 1
-
-pub val kuser_addr_null: int = 0
-
-pub val kint8_max: int = 127
-
-pub val kint16_max: int = 32767
-
-pub val kint32_max: int = 2147483647
-
-pub val kint64_max: int = 9223372036854775807
 
 pub val kint8_min: int = -128
 
@@ -1308,6 +1762,14 @@ pub val kint16_min: int = -32768
 pub val kint32_min: int = -2147483648
 
 pub val kint64_min: int = -9223372036854775808
+
+pub val kint8_max: int = 127
+
+pub val kint16_max: int = 32767
+
+pub val kint32_max: int = 2147483647
+
+pub val kint64_max: int = 9223372036854775807
 
 pub val kuint8_max: int = 255
 
@@ -1343,59 +1805,57 @@ pub val kuint_least64_max: int = -1
 
 pub val kint_fast8_min: int = -128
 
-pub val kint_fast16_min: int = -32768
+pub val kint_fast16_min: int = -9223372036854775808
 
-pub val kint_fast32_min: int = -2147483648
+pub val kint_fast32_min: int = -9223372036854775808
 
 pub val kint_fast64_min: int = -9223372036854775808
 
 pub val kint_fast8_max: int = 127
 
-pub val kint_fast16_max: int = 32767
+pub val kint_fast16_max: int = 9223372036854775807
 
-pub val kint_fast32_max: int = 2147483647
+pub val kint_fast32_max: int = 9223372036854775807
 
 pub val kint_fast64_max: int = 9223372036854775807
 
 pub val kuint_fast8_max: int = 255
 
-pub val kuint_fast16_max: int = 65535
+pub val kuint_fast16_max: int = -1
 
-pub val kuint_fast32_max: int = 4294967295
+pub val kuint_fast32_max: int = -1
 
 pub val kuint_fast64_max: int = -1
 
-pub val kintptr_max: int = 9223372036854775807
-
 pub val kintptr_min: int = -9223372036854775808
 
+pub val kintptr_max: int = 9223372036854775807
+
 pub val kuintptr_max: int = -1
+
+pub val kintmax_min: int = -9223372036854775808
 
 pub val kintmax_max: int = 9223372036854775807
 
 pub val kuintmax_max: int = -1
 
-pub val kintmax_min: int = -9223372036854775808
-
 pub val kptrdiff_min: int = -9223372036854775808
 
 pub val kptrdiff_max: int = 9223372036854775807
 
-pub val ksize_max: int = -1
-
-pub val krsize_max: int = 9223372036854775807
-
-pub val kwchar_max: int = 2147483647
-
-pub val kwchar_min: int = -2147483648
-
-pub val kwint_min: int = -2147483648
-
-pub val kwint_max: int = 2147483647
-
 pub val ksig_atomic_min: int = -2147483648
 
 pub val ksig_atomic_max: int = 2147483647
+
+pub val ksize_max: int = -1
+
+pub val kwchar_min: int = -2147483648
+
+pub val kwchar_max: int = 2147483647
+
+pub val kwint_min: int = 0
+
+pub val kwint_max: int = 4294967295
 
 pub val knull: int = 0
 
