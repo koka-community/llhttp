@@ -15,7 +15,7 @@ dev_dependencies:
 ffigen:
   name: http
   ffi-native:
-    assetId: '../deps/llhttp/build/llhttp.h'
+    assetId: 'c { vcpkg="llhttp" }'
   description: Bindings to `llhttp.h`.
   output: 'http/bindings.kk'
   headers:
